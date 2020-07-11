@@ -13,7 +13,8 @@ const config: Phaser.Types.Core.GameConfig = {
   height: 600,
   type: Phaser.AUTO,
   parent: "game",
-  scene: MainScene
+  scene: MainScene,
+  backgroundColor: '#999999'
 };
 
 export class Game extends Phaser.Game {

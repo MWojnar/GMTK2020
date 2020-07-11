@@ -1,3 +1,5 @@
+const INPUT_EVENTS = Phaser.Input.Events;
+
 export class Button extends Phaser.GameObjects.Sprite {
 
     BASE_FRAME: integer = 0;
@@ -10,10 +12,14 @@ export class Button extends Phaser.GameObjects.Sprite {
         super.setInteractive()
 
         this.setInteractive();
-        this.on('pointerdown', this.onDown, this);
-        this.on('pointerup', this.onUp(callback), this)
+        this.on(INPUT_EVENTS.GAMEOBJECT_POINTER_DOWN, this.onDown, this);
+        this.on(INPUT_EVENTS.GAMEOBJECT_POINTER_UP, this.onUp(callback), this)
+        this.scene.input.on(INPUT_EVENTS.POINTER_UP, (event) => this.setFrame(this.getBounds().contains(event.upX, event.upY) ? this.HOVER_FRAME : this.BASE_FRAME), this);
+        this.on(INPUT_EVENTS.GAMEOBJECT_POINTER_OVER, () => this.setFrame(this.frame.name == this.BASE_FRAME.toString() ? this.HOVER_FRAME : this.frame.name), this);
+        this.on(INPUT_EVENTS.GAMEOBJECT_POINTER_OUT, () => this.setFrame(this.frame.name == this.HOVER_FRAME.toString() ? this.BASE_FRAME : this.frame.name), this);
 
         this.scene.add.existing(this);
+
     }
 
     onDown(): void {
@@ -24,12 +30,16 @@ export class Button extends Phaser.GameObjects.Sprite {
 
     onUp(callback: Function): Function {
         return () => {
-            console.log("Name on release: " + this.frame.name);
             if (this.active && this.frame.name == this.PRESSED_FRAME.toString()) {
-                this.setFrame(this.BASE_FRAME);
                 callback();
+                this.setFrame(this.BASE_FRAME);
             }
         }
+    }
+
+    setActive(value: boolean): this {
+        this.setFrame(value ? this.BASE_FRAME : this.INACTIVE_FRAME);
+        return super.setActive(value);
     }
     
 }

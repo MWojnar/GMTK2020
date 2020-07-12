@@ -1,0 +1,65 @@
+{
+    "anims": [
+        {
+            "key": "evilCursorAnimation",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "evilCursor",
+                    "frame": 0,
+                    "duration": 0
+                },
+                {
+                    "key": "evilCursor",
+                    "frame": 1,
+                    "duration": 0
+                },
+                {
+                    "key": "evilCursor",
+                    "frame": 2,
+                    "duration": 0
+                }
+            ],
+            "frameRate": 12,
+            "duration": 0,
+            "skipMissedFrames": true,
+            "delay": 0,
+            "repeat": -1,
+            "repeatDelay": 0,
+            "yoyo": false,
+            "showOnStart": true,
+            "hideOnComplete": false
+        },
+        {
+            "key": "numberPoliceAnimation",
+            "type": "frame",
+            "frames": [
+                {
+                    "key": "numberPolice",
+                    "frame": 0,
+                    "duration": 0
+                },
+                {
+                    "key": "numberPolice",
+                    "frame": 1,
+                    "duration": 0
+                },
+                {
+                    "key": "numberPolice",
+                    "frame": 2,
+                    "duration": 0
+                }
+            ],
+            "frameRate": 12,
+            "duration": 0,
+            "skipMissedFrames": true,
+            "delay": 0,
+            "repeat": -1,
+            "repeatDelay": 0,
+            "yoyo": false,
+            "showOnStart": true,
+            "hideOnComplete": false
+        }
+    ],
+    "globalTimeScale": 1
+}

@@ -12,8 +12,6 @@ export class EvilCursor extends Phaser.GameObjects.PathFollower {
     
     public static STATES = EvilCursorState;
 
-    private BASE_FRAME = 0;
-    private CLICKED_FRAME = 1;
     private clickInterval: NodeJS.Timeout;
     private number: Number;
 
@@ -28,6 +26,7 @@ export class EvilCursor extends Phaser.GameObjects.PathFollower {
         setTimeout(this.destroy.bind(this), durationInSeconds * 1000);
         
         this.scene.add.existing(this);
+        this.anims.play('evilCursorAnimation');
         this.startFollow();
     }
 

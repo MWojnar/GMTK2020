@@ -29,7 +29,7 @@ export class EvilCursor extends Phaser.GameObjects.PathFollower {
     private speed: number = 300;
     private foundTarget: boolean;
     private numberClickSpeed: number = 10;
-    private policeClickSpeed: number = 30;
+    private policeClickSpeed: number = 50;
     private buyChance: number = 1;
 
     public constructor(scene: Scene, x: number, y: number, texture: string, durationInSeconds: number, state: EvilCursorState) {
@@ -62,13 +62,21 @@ export class EvilCursor extends Phaser.GameObjects.PathFollower {
             this.targetPolice = GameManager.getInstance(this.scene).getRandomNumberPolice();
             if (this.targetPolice) {
                 this.moveTo.moveTo(this.targetPolice.x, this.targetPolice.y);
-                this.moveTo.once('complete', this.damagePolice, this);
             }
         } else if (!this.foundTarget) {
             this.moveTo.moveTo(this.targetPolice.x, this.targetPolice.y);
             let newAngle = Phaser.Math.RadToDeg(Phaser.Math.Angle.Between(this.x, this.y, this.targetPolice.x, this.targetPolice.y));
             this.setAngle(newAngle + 135);
         }
+        if (this.targetPolice && !this.targetPolice.getIsDying()) {
+            if (this.targetPolice.getBounds().contains(this.x, this.y)) {
+                this.targetPolice.hurt(5);
+            }
+        } else if (this.targetPolice && this.targetPolice.getIsDying()) {
+            this.foundTarget = false;
+            this.targetPolice = null;
+        }
+        
     }
 
     public shopStateUpdate(): void {
@@ -104,21 +112,8 @@ export class EvilCursor extends Phaser.GameObjects.PathFollower {
         super.setState(state);
     }
 
-    private damagePolice() {
-        this.foundTarget = true;
-        this.clickInterval = setInterval((() => {
-            if (!this.targetPolice.getIsDying()) {
-                this.targetPolice.hurt(1);
-            } else {
-                this.foundTarget = false;
-                this.targetPolice = null;
-                clearInterval(this.clickInterval);
-            }
-        }).bind(this), 1000 / this.policeClickSpeed);
-    }
-
     public click() {
-        this.number.add(1);
+        this.number.add(GameManager.getInstance(this.scene).getClickAmount());
     }
 
     public startClicking(clicksPerSecond: number) {

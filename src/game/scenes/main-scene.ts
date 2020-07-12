@@ -35,8 +35,8 @@ export class MainScene extends Phaser.Scene {
     this.load.spritesheet('numberPolice', '../assets/GMTK2020numberpolice.png', {
       frameHeight: 128, frameWidth: 128
     });
-    this.load.spritesheet('doctorNumbers', '../assets/DoctorNumbers.png', {
-      frameHeight: 240, frameWidth: 360
+    this.load.spritesheet('doctorNumbers', '../assets/ProfessorNumbers.png', {
+      frameHeight: 208, frameWidth: 218
     });
 
     this.load.animation('animations', '../assets/animations.json');

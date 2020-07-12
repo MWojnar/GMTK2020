@@ -68,6 +68,7 @@ export class NumberPolice extends GameObjects.PathFollower {
 
     private decreaseNumber(): void {
         this.number.add(-this.damage);
+        GameManager.getInstance(this.scene).playNumberHurtSound();
     }
 
     private triggerDeath(): void {
@@ -82,6 +83,7 @@ export class NumberPolice extends GameObjects.PathFollower {
                 duration: 1000,
                 onComplete: this.destroy.bind(this)
             })
+            GameManager.getInstance(this.scene).playKillBotSound();
         }
     }
 

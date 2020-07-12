@@ -5,15 +5,18 @@ import { GameManager } from './GameManager';
 const INPUT_EVENTS = Phaser.Input.Events;
 const STYLE = { 
     color: '#0f0',
-    backgroundColor: '#fff',
+    backgroundColor: '#f00',
     strokeThickness: 5,
-    fontSize: '60px'
+    stroke: '#0f0',
+    fontSize: '60px',
+    fontFamily: 'Sans Serif'
 };
 
 export class Number extends Phaser.GameObjects.Text {
 
     private value: number;
     private eventEmitter: CustomEventEmitter;
+    private gameManager: GameManager;
 
     public constructor(scene: Scene, x: number, y: number) {
         super(scene, x, y, '0', STYLE);
@@ -25,6 +28,7 @@ export class Number extends Phaser.GameObjects.Text {
         .on(INPUT_EVENTS.POINTER_UP, this.addClick.bind(this));
 
         this.eventEmitter = CustomEventEmitter.getInstance();
+        this.gameManager = GameManager.getInstance(this.scene);
 
         this.scene.add.existing(this);
     }
@@ -43,6 +47,7 @@ export class Number extends Phaser.GameObjects.Text {
 
     public addClick(): void {
         this.click(GameManager.getInstance(this.scene).getClickAmount())
+        this.gameManager.playClickSound();
     }
 
     public getValue(): number {

@@ -43,6 +43,10 @@ export class NumberPolice extends GameObjects.PathFollower {
         }
     }
 
+    public getIsDying(): boolean {
+        return this.isDying;
+    }
+
     public hurt(damage: number): void {
         this.health -= damage;
         console.log(this.health);
@@ -68,6 +72,7 @@ export class NumberPolice extends GameObjects.PathFollower {
 
     private triggerDeath(): void {
         if (!this.isDying) {
+            GameManager.getInstance(this.scene).destroyNumberPolice(this);
             this.isDying = true;
             let startPoint = this.path.getStartPoint();
             this.path.destroy();

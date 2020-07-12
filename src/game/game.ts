@@ -6,6 +6,7 @@
 
 import "phaser";
 import { MainScene } from "./scenes/main-scene";
+import MoveToPlugin from 'phaser3-rex-plugins/plugins/moveto-plugin.js';
 
 // main game configuration
 const config: Phaser.Types.Core.GameConfig = {
@@ -14,7 +15,14 @@ const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   parent: "game",
   scene: MainScene,
-  backgroundColor: '#999999'
+  backgroundColor: '#999999',
+  plugins: {
+    global: [{
+      key: 'rexMoveTo',
+      plugin: MoveToPlugin,
+      start: true
+    }]
+  }
 };
 
 export class Game extends Phaser.Game {

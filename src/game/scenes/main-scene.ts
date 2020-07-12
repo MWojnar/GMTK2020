@@ -21,6 +21,8 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload(): void {
+
+    this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
     
     /* Can we load spritesheets from json like animations? */
     this.load.spritesheet('background', '../assets/Background.png', {
@@ -47,28 +49,6 @@ export class MainScene extends Phaser.Scene {
 
   create(): void {
     let gameManager = GameManager.getInstance(this);
-    gameManager.createNumberEvilCursor(0, 0, 5);
-    // setInterval(this.createRandomThings.bind(this), 2000);
-  }
-
-  /* Just testing */
-  private createRandomThings(): void {
-    let gameManager = GameManager.getInstance(this);
-    let rect = new Phaser.Geom.Rectangle(0, 0, this.cameras.main.width, this.cameras.main.height);
-    let sides: Phaser.Geom.Point[] = [ rect.getLineA().getRandomPoint(), rect.getLineB().getRandomPoint(), rect.getLineC().getRandomPoint(), rect.getLineD().getRandomPoint() ];
-    let randomSide = Math.round(Math.random() * 3);
-    let randomPoint: Phaser.Geom.Point = sides[randomSide];
-    let randomInt = Math.round(Math.random() * 2)
-    switch (randomInt) {
-      case 0:
-        break;
-      case 1:
-        gameManager.createNumberEvilCursor(randomPoint.x, randomPoint.y, 5);
-        break;
-      case 2:
-        new NumberPolice(this, randomPoint.x, randomPoint.y, 'numberPolice', 10, 20);
-        break;
-    }
   }
 
   update(): void {

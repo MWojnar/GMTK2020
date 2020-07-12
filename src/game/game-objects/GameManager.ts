@@ -4,15 +4,20 @@ import { Number } from "./Number";
 import { CustomEventEmitter } from "../events/CustomEventEmitter";
 import { DoctorNumbers } from "./DoctorNumbers";
 import { Button } from "./Button";
+import { NumberPolice } from "./NumberPolice";
+import * as EVENTS from '../events/events';
+
 
 let sceneInstanceMap = {};
 export class GameManager {
 
     private number: Number;
+    private eventEmitter: CustomEventEmitter;
     private doctorNumbers: DoctorNumbers;
     private numberEvilCursors: EvilCursor[] = [];
     private shopEvilCursors: EvilCursor[] = [];
     private policeEvilCursors: EvilCursor[] = [];
+    private numberPolice: NumberPolice[] = [];
     private scene: Scene;
     private evilClickerPhase: number = 0;
     private evilBuyerPhase: number = 0;
@@ -33,6 +38,7 @@ export class GameManager {
     private constructor(scene: Scene) {
         sceneInstanceMap[scene.scene.key] = this;
         this.scene = scene;
+        this.eventEmitter = CustomEventEmitter.getInstance();
         this.scene.add.existing(new Phaser.GameObjects.Image(scene, scene.cameras.main.centerX, scene.cameras.main.centerY, 'background'));
         this.number = new Number(scene, 720 / 2, scene.cameras.main.centerY);
         this.doctorNumbers = new DoctorNumbers(scene, 910, 360, 'doctorNumbers');
@@ -44,6 +50,10 @@ export class GameManager {
     public static getInstance(scene: Scene): GameManager {
         if (!sceneInstanceMap[scene.scene.key]) new GameManager(scene);
         return sceneInstanceMap[scene.scene.key];
+    }
+
+    public canClickNumber(): boolean {
+        return !this.numberEvilCursors.some((numberEvilCursor: EvilCursor) => this.number.getBounds().contains(numberEvilCursor.x, numberEvilCursor.y));
     }
 
     public createNumberEvilCursor(x: number, y: number, duration: number): EvilCursor {
@@ -67,7 +77,7 @@ export class GameManager {
         return evilCursor;
     }
 
-    public destroyEvilCursor(evilCursor: EvilCursor) {
+    public destroyEvilCursor(evilCursor: EvilCursor): void {
         switch (evilCursor.state) {
             case EvilCursor.STATES.CLICKING_NUMBER:
                 this.numberEvilCursors = this.numberEvilCursors.filter((other) => other !== evilCursor);
@@ -79,6 +89,22 @@ export class GameManager {
                 this.policeEvilCursors.filter((other) => other !== evilCursor);
                 break;
         }
+    }
+
+    public createNumberPolice(x: number, y: number, damage: number): NumberPolice {
+        let numberPolice = new NumberPolice(this.scene, x, y, 'numberPolice', damage, 20);
+        this.numberPolice.push(numberPolice);
+        this.eventEmitter.emit(EVENTS.POLICE_SPAWNED);
+        return numberPolice;
+    }
+
+    public getRandomNumberPolice(): NumberPolice {
+        let length = this.numberPolice.length;
+        return length ? this.numberPolice[Math.round(Math.random() * length)] : null;
+    }
+
+    public destroyNumberPolice(numberPolice: NumberPolice): void {
+        this.numberPolice = this.numberPolice.filter((other) => other !== numberPolice);
     }
 
     public getNumber(): Number {
@@ -131,7 +157,7 @@ export class GameManager {
         }
         if (PoliceRandom < this.policePhase) {
             let point = this.randPointOutsideBoundaries();
-            //this.createNumberPolice(point.x, point.y, 10);
+            this.createNumberPolice(point.x, point.y, 10);
         }
     }
 

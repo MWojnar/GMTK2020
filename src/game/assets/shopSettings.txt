@@ -1,0 +1,8 @@
+{
+    "initClickerPrice": 15,
+    "initAutoPrice": 150,
+    "initClickerAmount": 1,
+    "initAutoAmount": 0,
+    "clickerExponent": 1.15,
+    "autoExponent": 1.15
+}

@@ -1,6 +1,7 @@
 var path = require("path");
 var pathToPhaser = path.join(__dirname, "/node_modules/phaser/");
 var phaser = path.join(pathToPhaser, "dist/phaser.js");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: "./game.ts",
@@ -27,7 +28,16 @@ module.exports = {
       phaser: phaser
     }
   },
-  node: {
-	  fs: "empty"
-  }
+  plugins: [
+	new CopyWebpackPlugin([
+		{
+			from: path.resolve(__dirname, 'index.html'),
+			to: path.resolve(__dirname, 'dist')
+		},
+		{
+			from: path.resolve(__dirname, 'assets', '**', '*'),
+			to: path.resolve(__dirname, 'dist')
+		}
+	])
+  ]
 };

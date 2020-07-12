@@ -116,6 +116,18 @@ export class GameManager {
         this.numberPolice = this.numberPolice.filter((other) => other !== numberPolice);
     }
 
+    public getRandomShopButton(): Button {
+        let button: Button = null;
+        if (this.canBuyAuto() && this.canBuyClicker()) {
+            let rand = Math.round(Math.random());
+            if (rand === 0) button = this.clickerButton;
+            else button = this.autoButton;
+        }
+        else if (this.canBuyAuto()) button = this.autoButton;
+        else if (this.canBuyClicker()) button = this.clickerButton;
+        return button;
+    }
+
     public getNumber(): Number {
         return this.number;
     }

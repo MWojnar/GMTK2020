@@ -11,6 +11,7 @@ export class Button extends Phaser.GameObjects.Sprite {
     private startY: number = 0;
     private text: Phaser.GameObjects.Text;
     private outerText: Phaser.GameObjects.Text;
+    private callback: Function;
     private activeCallback: Function;
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, callback: Function, activeCallback: Function, text: string, outerText: string, frame?: string | integer) {
@@ -19,6 +20,7 @@ export class Button extends Phaser.GameObjects.Sprite {
         this.startY = y;
         super.setInteractive()
 
+        this.callback = callback;
         this.activeCallback = activeCallback;
         this.setInteractive();
         this.on(INPUT_EVENTS.GAMEOBJECT_POINTER_DOWN, this.onDown, this);
@@ -69,6 +71,11 @@ export class Button extends Phaser.GameObjects.Sprite {
     public update() {
         this.setActive(this.activeCallback());
         super.update();
+    }
+
+    public click() {
+        this.onDown();
+        setTimeout(this.onUp(this.callback).bind(this), 100);
     }
     
 }

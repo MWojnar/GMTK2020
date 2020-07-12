@@ -3,6 +3,7 @@ import { Scene } from "phaser";
 import { Number } from "./Number";
 import { CustomEventEmitter } from "../events/CustomEventEmitter";
 import { DoctorNumbers } from "./DoctorNumbers";
+import { Button } from "./Button";
 
 let sceneInstanceMap = {};
 export class GameManager {
@@ -16,8 +17,11 @@ export class GameManager {
 
     private constructor(scene: Scene) {
         this.scene = scene;
-        this.number = new Number(scene, scene.cameras.main.centerX, scene.cameras.main.centerY);
-        this.doctorNumbers = new DoctorNumbers(scene, 720, 240, 'evilCursor');
+        this.scene.add.existing(new Phaser.GameObjects.Image(scene, scene.cameras.main.centerX, scene.cameras.main.centerY, 'background'));
+        this.number = new Number(scene, 720 / 2, scene.cameras.main.centerY);
+        this.doctorNumbers = new DoctorNumbers(scene, 900, 360, 'doctorNumbers');
+        new Button(scene, 900, 540, 'button', () => '', 'Clicks', 0);
+        (new Button(scene, 900, 660, 'button', () => '', 'Auto', 0)).setActive(false);
     }
 
     public static getInstance(scene: Scene): GameManager {

@@ -20,11 +20,17 @@ export class MainScene extends Phaser.Scene {
 
   preload(): void {
     this.load.image("myImage", "../assets/phaser.png");
-    this.load.spritesheet('button', '../assets/ExampleButton.png', {
-      frameHeight: 300, frameWidth: 400
+    this.load.spritesheet('background', '../assets/Background.png', {
+      frameHeight: 720, frameWidth: 1080
+    });
+    this.load.spritesheet('button', '../assets/Button.png', {
+      frameHeight: 60, frameWidth: 140
     });
     this.load.spritesheet('evilCursor', '../assets/EvilCursor.png', {
-      frameHeight: 40, frameWidth: 40
+      frameHeight: 64, frameWidth: 64
+    });
+    this.load.spritesheet('doctorNumbers', '../assets/DoctorNumbers.png', {
+      frameHeight: 240, frameWidth: 360
     });
     this.load.json('dialogue', 'assets/dialogue.txt');
   }

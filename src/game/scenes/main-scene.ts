@@ -42,8 +42,14 @@ export class MainScene extends Phaser.Scene {
     });
 
     this.load.animation('animations', '../assets/animations.json');
+
     this.load.json('dialogue', 'assets/dialogue.txt');
     this.load.json('shopSettings', 'assets/shopSettings.txt');
+
+    this.load.audio('click', 'assets/click.wav');
+    this.load.audio('killbot', 'assets/killbot.wav');
+    this.load.audio('numberhurt', 'assets/numberhurt.wav');
+    this.load.audio('upgrade', 'assets/upgrade.wav');
   }
 
   

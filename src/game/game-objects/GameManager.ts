@@ -37,6 +37,11 @@ export class GameManager {
     private clickerExponent: number = 1.15;
     private autoExponent: number = 1.15;
 
+    private soundClick: Phaser.Sound.BaseSound;
+    private soundKillBot: Phaser.Sound.BaseSound;
+    private soundNumberHurt: Phaser.Sound.BaseSound;
+    private soundUpgrade: Phaser.Sound.BaseSound;
+
     private constructor(scene: Scene) {
         sceneInstanceMap[scene.scene.key] = this;
         this.scene = scene;
@@ -54,6 +59,10 @@ export class GameManager {
         this.clickerButton = new Button(scene, 960, 550, 'button', this.buyClicker.bind(this), this.canBuyClicker.bind(this), 'Buy (-' + this.curClickerPrice + ')', '+' + this.curClickAmount + ' Per Click', 0);
         this.autoButton = new Button(scene, 960, 650, 'button', this.buyAuto.bind(this), this.canBuyAuto.bind(this), 'Buy (-' + this.curAutoPrice + ')', '+' + this.curAutoAmount + ' Per Second', 0);
         this.scene.events.on("update", this.update, this);
+        this.soundClick = this.scene.sound.add('click');
+        this.soundKillBot = this.scene.sound.add('killbot');
+        this.soundNumberHurt = this.scene.sound.add('numberhurt');
+        this.soundUpgrade = this.scene.sound.add('upgrade');
     }
 
     public static getInstance(scene: Scene): GameManager {
@@ -167,7 +176,7 @@ export class GameManager {
         }
         if (PoliceRandom < this.policePhase) {
             let point = this.randPointOutsideBoundaries();
-            this.createNumberPolice(point.x, point.y, 10);
+            this.createNumberPolice(point.x, point.y, 500);
         }
     }
 
@@ -201,6 +210,7 @@ export class GameManager {
         this.curClickerPrice *= this.clickerExponent;
         this.clickerButton.updateText("Buy (-" + Math.ceil(this.curClickerPrice).toString() + ")");
         this.clickerButton.updateOuterText("+" + Math.floor(this.curClickAmount).toString() + " Per Click");
+        this.playUpgradeSound();
     }
 
     public buyAuto(): void {
@@ -209,6 +219,7 @@ export class GameManager {
         this.curAutoPrice *= this.autoExponent;
         this.autoButton.updateText("Buy (-" + Math.ceil(this.curAutoPrice).toString() + ")");
         this.autoButton.updateOuterText("+" + Math.floor(this.curAutoAmount).toString() + " Per Second");
+        this.playUpgradeSound();
     }
 
     public canBuyClicker(): boolean {
@@ -217,6 +228,22 @@ export class GameManager {
 
     public canBuyAuto(): boolean {
         return this.storeUnlocked && this.number.getValue() > this.curAutoPrice;
+    }
+
+    public playClickSound(): void {
+        this.soundClick.play();
+    }
+
+    public playKillBotSound(): void {
+        this.soundKillBot.play();
+    }
+
+    public playNumberHurtSound(): void {
+        this.soundNumberHurt.play();
+    }
+
+    public playUpgradeSound(): void {
+        this.soundUpgrade.play();
     }
 
 }

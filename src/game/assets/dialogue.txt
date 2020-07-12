@@ -1,0 +1,128 @@
+[
+        {
+            "numberTrigger": 1,
+            "text": "That’s good! Now keep clicking to learn about higher numbers!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 10,
+            "text": "Yeah! Let’s go higher and higher! This is fun!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 25,
+            "text": "Yeah!! Higher, higher!!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 50,
+            "text": "FASTER!! FASTER!!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 100,
+            "text": "...is that really the fastest you can go?!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 125,
+            "text": "C’mon! I don’t have all day!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 150,
+            "text": "Alright, clearly you need help. Here’s a store where you can buy some stuff to help you out. Just don’t spend too much of my-I mean our number!",
+            "event": "unlockStore",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 200,
+            "text": "Alright, that’s more like it!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 300,
+            "text": "Yeah! HIGHER!!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 500,
+            "text": "INTO THE STRATOSPHERE!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 1000,
+            "text": "C’MON, HIGHER!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 1500,
+            "text": "FASTER!! MY GRANDMA COULD GO FASTER!!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 25000,
+            "text": "Alright slowpoke, I’ll take over the clicking! You just handle the store. I can click WAY faster than your limp fingers anyway.",
+            "event": "evilClicker",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 50000,
+            "text": "Now we’re talking!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 100000,
+            "text": "Oh no! The Number Police are here! Quick! Click them before they start taking down my GLORIOUS number!",
+            "event": "numberPolice",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 150000,
+            "text": "I knew they’d catch up to me eventually! It’s Trinidad all over again!",
+            "event": "none",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 250000,
+            "text": "I don’t care if this high of a number is illegal! We’re going to reach number heights like NEVER before!!",
+            "event": "evilClicker2",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 500000,
+            "text": "C’mon, C’MON! We need to go faster if we’re going to keep up with these Number Cops!",
+            "event": "numberPolice2",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 1000000,
+            "text": "FINE! If you want something done right, you gotta do it yourself! I’ll take over the store, you handle the cops!",
+            "event": "evilBuyer",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 2500000,
+            "text": "You’ll  NEVER TAKE ME ALIVE, COPPERS!!",
+            "event": "evilFighter",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 5000000,
+            "text": "",
+            "event": "none",
+            "frame": 0
+        }
+    ]

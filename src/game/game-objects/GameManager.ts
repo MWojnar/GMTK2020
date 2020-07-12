@@ -2,11 +2,13 @@ import { EvilCursor } from "./EvilCursor";
 import { Scene } from "phaser";
 import { Number } from "./Number";
 import { CustomEventEmitter } from "../events/CustomEventEmitter";
+import { DoctorNumbers } from "./DoctorNumbers";
 
 let sceneInstanceMap = {};
 export class GameManager {
 
     private number: Number;
+    private doctorNumbers: DoctorNumbers;
     private numberEvilCursors: EvilCursor[] = [];
     private shopEvilCursors: EvilCursor[] = [];
     private policeEvilCursors: EvilCursor[] = [];
@@ -15,6 +17,7 @@ export class GameManager {
     private constructor(scene: Scene) {
         this.scene = scene;
         this.number = new Number(scene, scene.cameras.main.centerX, scene.cameras.main.centerY);
+        this.doctorNumbers = new DoctorNumbers(scene, 720, 240, 'evilCursor');
     }
 
     public static getInstance(scene: Scene): GameManager {

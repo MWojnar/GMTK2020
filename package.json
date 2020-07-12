@@ -21,13 +21,16 @@
     "expose-loader": "0.7.5",
     "ts-loader": "6.0.4",
     "typescript": "3.5.2",
-    "webpack": "4.35.2",
-    "webpack-cli": "3.3.5",
-    "webpack-dev-server": "3.7.2"
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "clear-module": "^4.1.1",
-    "phaser": "^3.23.0"
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
+    "phaser": "^3.23.0",
+    "properties-reader": "^2.0.0"
   },
   "scripts": {
     "dev": "cd src/game && yarn install && yarn run dev",

@@ -6,6 +6,8 @@
 
 import { GameManager } from "../game-objects/GameManager";
 import { EvilCursor } from "../game-objects/EvilCursor";
+import { Button } from '../game-objects/Button';
+import { DoctorNumbers } from '../game-objects/DoctorNumbers';
 
 export class MainScene extends Phaser.Scene {
   private phaserSprite: Phaser.GameObjects.Sprite;
@@ -24,6 +26,7 @@ export class MainScene extends Phaser.Scene {
     this.load.spritesheet('evilCursor', '../assets/EvilCursor.png', {
       frameHeight: 40, frameWidth: 40
     });
+    this.load.json('dialogue', 'assets/dialogue.txt');
   }
 
   create(): void {

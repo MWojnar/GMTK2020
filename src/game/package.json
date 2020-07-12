@@ -26,7 +26,10 @@
     "webpack-dev-server": "3.9.0"
   },
   "dependencies": {
-    "phaser": "3.20.1"
+    "@types/properties-reader": "0.0.2",
+    "fs": "0.0.1-security",
+    "phaser": "3.20.1",
+    "properties-reader": "^2.0.0"
   },
   "scripts": {
     "dev": "webpack --mode development && webpack-dev-server --mode development",

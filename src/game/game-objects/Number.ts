@@ -1,6 +1,7 @@
 import * as EVENTS from '../events/events';
 import { CustomEventEmitter } from '../events/CustomEventEmitter';
 import { Scene } from 'phaser';
+import { GameManager } from './GameManager';
 const INPUT_EVENTS = Phaser.Input.Events;
 const STYLE = { 
     color: '#0f0',
@@ -21,7 +22,7 @@ export class Number extends Phaser.GameObjects.Text {
         this.setOrigin(.5, .5);
 
         this.setInteractive({ useHandCursor: true })
-        .on(INPUT_EVENTS.POINTER_UP, this.add.bind(this, 1));
+        .on(INPUT_EVENTS.POINTER_UP, this.addClick.bind(this));
 
         this.eventEmitter = CustomEventEmitter.getInstance();
 
@@ -30,8 +31,12 @@ export class Number extends Phaser.GameObjects.Text {
 
     public add(amount: number): void {
         this.value += amount;
-        this.setText(this.value.toString());
+        this.setText(Math.floor(this.value).toString());
         this.eventEmitter.emit(EVENTS.NUMBER_CHANGED, this.value - amount, this.value);
+    }
+
+    public addClick(): void {
+        this.add(GameManager.getInstance(this.scene).getClickAmount())
     }
 
     public getValue(): number {

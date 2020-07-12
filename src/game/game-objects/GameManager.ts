@@ -24,15 +24,20 @@ export class GameManager {
     private policeModifier: number = 600;
     private clickerButton: Button;
     private autoButton: Button;
+    private storeUnlocked: boolean = false;
+    private curClickerPrice: number = 15;
+    private curAutoPrice: number = 150;
+    private curClickAmount: number = 1;
+    private curAutoAmount: number = 0;
 
     private constructor(scene: Scene) {
         sceneInstanceMap[scene.scene.key] = this;
         this.scene = scene;
         this.scene.add.existing(new Phaser.GameObjects.Image(scene, scene.cameras.main.centerX, scene.cameras.main.centerY, 'background'));
         this.number = new Number(scene, 720 / 2, scene.cameras.main.centerY);
-        this.doctorNumbers = new DoctorNumbers(scene, 900, 360, 'doctorNumbers');
-        this.clickerButton = new Button(scene, 900, 540, 'button', () => '', 'Clicks', 0);
-        this.autoButton = (new Button(scene, 900, 660, 'button', () => '', 'Auto', 0)).setActive(false);
+        this.doctorNumbers = new DoctorNumbers(scene, 910, 360, 'doctorNumbers');
+        this.clickerButton = new Button(scene, 960, 550, 'button', this.buyClicker.bind(this), this.canBuyClicker.bind(this), 'Buy (-15)', '+1 Per Click', 0);
+        this.autoButton = new Button(scene, 960, 650, 'button', this.buyAuto.bind(this), this.canBuyAuto.bind(this), 'Buy (-150)', '+0 Per Second', 0);
         this.scene.events.on("update", this.update, this);
     }
 
@@ -97,8 +102,7 @@ export class GameManager {
     }
 
     public unlockStore(): void {
-        this.clickerButton.setVisible(true);
-        this.autoButton.setVisible(true);
+        this.storeUnlocked = true;
     }
 
     public initiateEnd(): void {
@@ -110,6 +114,8 @@ export class GameManager {
         let evilBuyerRandom: number = Math.random() * this.evilBuyerModifier;
         let evilFighterRandom: number = Math.random() * this.evilFighterModifier;
         let PoliceRandom: number = Math.random() * this.policeModifier;
+        if (this.curAutoAmount > 0)
+            this.number.add(this.curAutoAmount / 60);
 
         if (evilClickerRandom < this.evilClickerPhase) {
             let point = this.randPointOutsideBoundaries();
@@ -147,6 +153,34 @@ export class GameManager {
                 return { x: Math.random() * (1080 + 300) - 150, y: 720 + 150 };   
             }
         }
+    }
+
+    public getClickAmount(): number {
+        return this.curClickAmount;
+    }
+
+    public buyClicker(): void {
+        this.number.add(-this.curClickerPrice);
+        this.curClickAmount++;
+        this.curClickerPrice *= 1.15;
+        this.clickerButton.updateText("Buy (-" + Math.ceil(this.curClickerPrice).toString() + ")");
+        this.clickerButton.updateOuterText("+" + Math.floor(this.curClickAmount).toString() + " Per Click");
+    }
+
+    public buyAuto(): void {
+        this.number.add(-this.curAutoPrice);
+        this.curAutoAmount++;
+        this.curAutoPrice *= 1.15;
+        this.autoButton.updateText("Buy (-" + Math.ceil(this.curAutoPrice).toString() + ")");
+        this.autoButton.updateOuterText("+" + Math.floor(this.curAutoAmount).toString() + " Per Second");
+    }
+
+    public canBuyClicker(): boolean {
+        return this.storeUnlocked && this.number.getValue() > this.curClickerPrice;
+    }
+
+    public canBuyAuto(): boolean {
+        return this.storeUnlocked && this.number.getValue() > this.curAutoPrice;
     }
 
 }

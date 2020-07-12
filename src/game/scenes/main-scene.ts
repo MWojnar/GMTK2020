@@ -40,13 +40,13 @@ export class MainScene extends Phaser.Scene {
 
     this.load.animation('animations', '../assets/animations.json');
     this.load.json('dialogue', 'assets/dialogue.txt');
+    this.load.json('shopSettings', 'assets/shopSettings.txt');
   }
 
   
 
   create(): void {
     let gameManager = GameManager.getInstance(this);
-    gameManager.createNumberEvilCursor(0, 0, 5);
     // gameManager.createNumberEvilCursor(100, 0, 10);    
     // gameManager.createNumberEvilCursor(200, 0, 15);    
     // gameManager.createNumberEvilCursor(300, 100, 7);    

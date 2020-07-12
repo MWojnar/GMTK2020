@@ -29,6 +29,8 @@ export class GameManager {
     private curAutoPrice: number = 150;
     private curClickAmount: number = 1;
     private curAutoAmount: number = 0;
+    private clickerExponent: number = 1.15;
+    private autoExponent: number = 1.15;
 
     private constructor(scene: Scene) {
         sceneInstanceMap[scene.scene.key] = this;
@@ -39,6 +41,13 @@ export class GameManager {
         this.clickerButton = new Button(scene, 960, 550, 'button', this.buyClicker.bind(this), this.canBuyClicker.bind(this), 'Buy (-15)', '+1 Per Click', 0);
         this.autoButton = new Button(scene, 960, 650, 'button', this.buyAuto.bind(this), this.canBuyAuto.bind(this), 'Buy (-150)', '+0 Per Second', 0);
         this.scene.events.on("update", this.update, this);
+        let shopSettings = this.scene.cache.json.get('shopSettings');
+        this.curClickerPrice = shopSettings.initClickerPrice;
+        this.curAutoPrice = shopSettings.initAutoPrice;
+        this.curClickAmount = shopSettings.initClickerAmount;
+        this.curAutoAmount = shopSettings.initAutoAmount;
+        this.clickerExponent = shopSettings.clickerExponent;
+        this.autoExponent = shopSettings.autoExponent;
     }
 
     public static getInstance(scene: Scene): GameManager {
@@ -162,7 +171,7 @@ export class GameManager {
     public buyClicker(): void {
         this.number.add(-this.curClickerPrice);
         this.curClickAmount++;
-        this.curClickerPrice *= 1.15;
+        this.curClickerPrice *= this.clickerExponent;
         this.clickerButton.updateText("Buy (-" + Math.ceil(this.curClickerPrice).toString() + ")");
         this.clickerButton.updateOuterText("+" + Math.floor(this.curClickAmount).toString() + " Per Click");
     }
@@ -170,7 +179,7 @@ export class GameManager {
     public buyAuto(): void {
         this.number.add(-this.curAutoPrice);
         this.curAutoAmount++;
-        this.curAutoPrice *= 1.15;
+        this.curAutoPrice *= this.autoExponent;
         this.autoButton.updateText("Buy (-" + Math.ceil(this.curAutoPrice).toString() + ")");
         this.autoButton.updateOuterText("+" + Math.floor(this.curAutoAmount).toString() + " Per Second");
     }

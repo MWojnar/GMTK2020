@@ -5,9 +5,11 @@ import { GameManager } from './GameManager';
 const INPUT_EVENTS = Phaser.Input.Events;
 const STYLE = { 
     color: '#0f0',
-    backgroundColor: '#fff',
+    backgroundColor: '#f00',
     strokeThickness: 5,
-    fontSize: '60px'
+    stroke: '#0f0',
+    fontSize: '60px',
+    fontFamily: 'Sans Serif'
 };
 
 export class Number extends Phaser.GameObjects.Text {

@@ -9,6 +9,7 @@ import { EvilCursor } from "../game-objects/EvilCursor";
 import { Button } from '../game-objects/Button';
 import { DoctorNumbers } from '../game-objects/DoctorNumbers';
 import { Animations } from "phaser";
+import { NumberPolice } from "../game-objects/NumberPolice";
 
 export class MainScene extends Phaser.Scene {
   private phaserSprite: Phaser.GameObjects.Sprite;
@@ -47,14 +48,27 @@ export class MainScene extends Phaser.Scene {
   create(): void {
     let gameManager = GameManager.getInstance(this);
     gameManager.createNumberEvilCursor(0, 0, 5);
-    // gameManager.createNumberEvilCursor(100, 0, 10);    
-    // gameManager.createNumberEvilCursor(200, 0, 15);    
-    // gameManager.createNumberEvilCursor(300, 100, 7);    
-    // gameManager.createNumberEvilCursor(300, 100, 3);    
-    // gameManager.createNumberEvilCursor(300, 200, 6000);    
-    // gameManager.createNumberEvilCursor(300, 300, 6000);    
-    // gameManager.createNumberEvilCursor(200, 300, 6000);    
-    // gameManager.createNumberEvilCursor(100, 300, 6000);    
+    // setInterval(this.createRandomThings.bind(this), 2000);
+  }
+
+  /* Just testing */
+  private createRandomThings(): void {
+    let gameManager = GameManager.getInstance(this);
+    let rect = new Phaser.Geom.Rectangle(0, 0, this.cameras.main.width, this.cameras.main.height);
+    let sides: Phaser.Geom.Point[] = [ rect.getLineA().getRandomPoint(), rect.getLineB().getRandomPoint(), rect.getLineC().getRandomPoint(), rect.getLineD().getRandomPoint() ];
+    let randomSide = Math.round(Math.random() * 3);
+    let randomPoint: Phaser.Geom.Point = sides[randomSide];
+    let randomInt = Math.round(Math.random() * 2)
+    switch (randomInt) {
+      case 0:
+        break;
+      case 1:
+        gameManager.createNumberEvilCursor(randomPoint.x, randomPoint.y, 5);
+        break;
+      case 2:
+        new NumberPolice(this, randomPoint.x, randomPoint.y, 'numberPolice', 10, 20);
+        break;
+    }
   }
 
   update(): void {

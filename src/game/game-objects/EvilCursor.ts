@@ -21,7 +21,6 @@ export class EvilCursor extends Phaser.GameObjects.PathFollower {
 
         this.setOrigin(0, 0)
         this.setState(state);
-        this.anims.play('evilCursor.animation');
         
         setTimeout(this.destroy.bind(this), durationInSeconds * 1000);
         

@@ -18,30 +18,28 @@ export class EvilCursor extends Phaser.GameObjects.PathFollower {
     
     public static STATES = EvilCursorState;
 
-    private startX: number;
-    private startY: number;
+    private startX: number = 850;
+    private startY: number = 600;
     private clickInterval: NodeJS.Timeout;
     private number: Number;
     private eventEmitter: CustomEventEmitter;
     private targetPolice: NumberPolice;
     private targetButton: Button;
     private moveTo: MoveTo;
-    private speed: number = 200;
+    private speed: number = 300;
     private foundTarget: boolean;
     private numberClickSpeed: number = 10;
-    private policeClickSpeed: number = 10;
+    private policeClickSpeed: number = 30;
     private buyChance: number = 1;
 
     public constructor(scene: Scene, x: number, y: number, texture: string, durationInSeconds: number, state: EvilCursorState) {
         super(scene, null, x, y, texture);
         this.number = GameManager.getInstance(scene).getNumber();
         this.eventEmitter = CustomEventEmitter.getInstance();
-        this.startX = x;
-        this.startY = y;
         // this.setOrigin(.2, .2)
         this.setState(state);
         
-        setTimeout(this.destroy.bind(this), durationInSeconds * 1000);
+        // setTimeout(this.destroy.bind(this), durationInSeconds * 1000);
         if (state === EvilCursorState.CLICKING_POLICE) {
             this.setDepth(10);
             this.scene.events.on(UPDATE, this.policeStateUpdate, this);
@@ -92,7 +90,7 @@ export class EvilCursor extends Phaser.GameObjects.PathFollower {
     }
 
     public buyItem(): void {
-        this.targetButton.click();
+        this.targetButton.evilCursorClick();
         this.moveTo.moveTo(this.startX, this.startY);
         let newAngle = Phaser.Math.RadToDeg(Phaser.Math.Angle.Between(this.x, this.y, this.startX, this.startY));
         this.setAngle(newAngle + 135);

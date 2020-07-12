@@ -40,7 +40,11 @@ export class Number extends Phaser.GameObjects.Text {
     }
 
     public add(amount: number): void {
-        this.value += amount;
+        if (this.value + amount < 0) {
+            this.value = 0;
+        } else {
+            this.value += amount;
+        }
         this.setText(Math.floor(this.value).toString());
         this.eventEmitter.emit(EVENTS.NUMBER_CHANGED, this.value - amount, this.value);
     }

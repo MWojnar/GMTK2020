@@ -56,8 +56,9 @@ export class MainScene extends Phaser.Scene {
 
   create(): void {
     let gameManager = GameManager.getInstance(this);
-    // gameManager.getNumber().add(10000);
-    // gameManager.createShopEvilCursor(800, 600, 10000);
+    gameManager.unlockStore();
+    gameManager.getNumber().add(1000);
+    gameManager.createShopEvilCursor(700, 700, 1000);
     // setInterval(() => gameManager.createNumberEvilCursor(0, 0, 1000), 3000);
   }
 

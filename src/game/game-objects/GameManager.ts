@@ -14,9 +14,9 @@ export class GameManager {
     private number: Number;
     private eventEmitter: CustomEventEmitter;
     private doctorNumbers: DoctorNumbers;
-    private numberEvilCursors: EvilCursor[] = [];
-    private shopEvilCursors: EvilCursor[] = [];
-    private policeEvilCursors: EvilCursor[] = [];
+    public numberEvilCursor: EvilCursor;
+    public shopEvilCursor: EvilCursor;
+    public policeEvilCursor: EvilCursor;
     private numberPolice: NumberPolice[] = [];
     private scene: Scene;
     private evilClickerPhase: number = 0;
@@ -71,40 +71,48 @@ export class GameManager {
     }
 
     public canClickNumber(): boolean {
-        return !this.numberEvilCursors.some((numberEvilCursor: EvilCursor) => this.number.getBounds().contains(numberEvilCursor.x, numberEvilCursor.y));
+        if (this.numberEvilCursor) {
+            return this.number.getBounds().contains(this.numberEvilCursor.x, this.numberEvilCursor.y);
+        } else return true;
     }
 
     public createNumberEvilCursor(x: number, y: number, duration: number): EvilCursor {
         let evilCursor = new EvilCursor(this.scene, x, y, 'evilCursor', duration, EvilCursor.STATES.CLICKING_NUMBER);
+        if (this.numberEvilCursor)
+            this.numberEvilCursor.destroy();
         evilCursor.on(Phaser.GameObjects.Events.DESTROY, () => {
             this.destroyEvilCursor(evilCursor);
         });
-        this.numberEvilCursors.push(evilCursor);
+        this.numberEvilCursor = evilCursor;
         return evilCursor;
     }
 
     public createShopEvilCursor(x: number, y: number, duration: number): EvilCursor {
         let evilCursor = new EvilCursor(this.scene, x, y, 'evilCursor', duration, EvilCursor.STATES.CLICKING_SHOP);
-        this.shopEvilCursors.push(evilCursor);
+        if (this.shopEvilCursor)
+            this.shopEvilCursor.destroy();
+        this.shopEvilCursor = evilCursor;
         return evilCursor;
     }
 
     public createPoliceEvilCursor(x: number, y: number, duration: number): EvilCursor {
         let evilCursor = new EvilCursor(this.scene, x, y, 'evilCursor', duration, EvilCursor.STATES.CLICKING_POLICE);
-        this.policeEvilCursors.push(evilCursor);
+        if (this.policeEvilCursor)
+            this.policeEvilCursor.destroy();
+        this.policeEvilCursor = evilCursor;
         return evilCursor;
     }
 
     public destroyEvilCursor(evilCursor: EvilCursor): void {
         switch (evilCursor.state) {
             case EvilCursor.STATES.CLICKING_NUMBER:
-                this.numberEvilCursors = this.numberEvilCursors.filter((other) => other !== evilCursor);
+                this.numberEvilCursor = undefined;
                 break;
             case EvilCursor.STATES.CLICKING_SHOP:
-                this.shopEvilCursors = this.shopEvilCursors.filter((other) => other !== evilCursor);
+                this.shopEvilCursor = undefined;
                 break;
             case EvilCursor.STATES.CLICKING_POLICE:
-                this.policeEvilCursors.filter((other) => other !== evilCursor);
+                this.policeEvilCursor = undefined;
                 break;
         }
     }
@@ -143,14 +151,26 @@ export class GameManager {
 
     public incrementEvilClickerPhase(): void {
         this.evilClickerPhase++;
+        if (!this.numberEvilCursor) {
+            let point = this.randPointOutsideBoundaries();
+            this.createNumberEvilCursor(point.x, point.y, 10);
+        }
     }
 
     public incrementEvilBuyerPhase(): void {
         this.evilBuyerPhase++;
+        if (!this.shopEvilCursor) {
+            let point = this.randPointOutsideBoundaries();
+            this.createShopEvilCursor(point.x, point.y, 10);
+        }
     }
 
     public incrementEvilFighterPhase(): void {
         this.evilFighterPhase++;
+        if (!this.policeEvilCursor) {
+            let point = this.randPointOutsideBoundaries();
+            this.createPoliceEvilCursor(point.x, point.y, 10);
+        }
     }
 
     public incrementPolicePhase(): void {
@@ -167,25 +187,10 @@ export class GameManager {
     }
 
     private update(): void {
-        let evilClickerRandom: number = Math.random() * this.evilClickerModifier;
-        let evilBuyerRandom: number = Math.random() * this.evilBuyerModifier;
-        let evilFighterRandom: number = Math.random() * this.evilFighterModifier;
         let PoliceRandom: number = Math.random() * this.policeModifier;
         if (this.curAutoAmount > 0)
             this.number.add(this.curAutoAmount / 60);
 
-        if (evilClickerRandom < this.evilClickerPhase) {
-            let point = this.randPointOutsideBoundaries();
-            this.createNumberEvilCursor(point.x, point.y, 10);
-        }
-        if (evilBuyerRandom < this.evilBuyerPhase) {
-            let point = this.randPointOutsideBoundaries();
-            this.createNumberEvilCursor(point.x, point.y, 10);
-        }
-        if (evilFighterRandom < this.evilFighterPhase) {
-            let point = this.randPointOutsideBoundaries();
-            this.createNumberEvilCursor(point.x, point.y, 10);
-        }
         if (PoliceRandom < this.policePhase) {
             let point = this.randPointOutsideBoundaries();
             this.createNumberPolice(point.x, point.y, 500);

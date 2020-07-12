@@ -14,25 +14,25 @@
         {
             "numberTrigger": 25,
             "text": "Yeah!! Higher, higher!!",
-            "event": "none",
+            "event": "incrementNumberPolice",
             "frame": "happy2"
         },
         {
             "numberTrigger": 50,
             "text": "FASTER!! FASTER!!",
-            "event": "none",
+            "event": "incrementEvilClicker",
             "frame": "over-excited"
         },
         {
             "numberTrigger": 100,
             "text": "...is that really the fastest you can go?!",
-            "event": "none",
+            "event": "incrementEvilFighter",
             "frame": "disappointed"
         },
         {
             "numberTrigger": 125,
             "text": "C’mon! I don’t have all day!",
-            "event": "none",
+            "event": "incrementEvilBuyer",
             "frame": "slightly-angry"
         },
         {

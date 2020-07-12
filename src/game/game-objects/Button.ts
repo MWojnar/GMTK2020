@@ -1,3 +1,5 @@
+import { GameManager } from "./GameManager";
+
 const INPUT_EVENTS = Phaser.Input.Events;
 
 export class Button extends Phaser.GameObjects.Sprite {
@@ -37,12 +39,27 @@ export class Button extends Phaser.GameObjects.Sprite {
     }
 
     onDown(): void {
-        if (this.active) {
+        if (!GameManager.getInstance(this.scene).shopEvilCursor && this.active) {
             this.setFrame(this.PRESSED_FRAME);
         }
     }
 
     onUp(callback: Function): Function {
+        return () => {
+            if (!GameManager.getInstance(this.scene).shopEvilCursor && this.active && this.frame.name == this.PRESSED_FRAME.toString()) {
+                callback();
+                this.setFrame(this.BASE_FRAME);
+            }
+        }
+    }
+
+    private evilCursorOnDown(): void {
+        if (this.active) {
+            this.setFrame(this.PRESSED_FRAME);
+        }
+    }
+
+    private evilCursorOnUp(callback: Function): Function {
         return () => {
             if (this.active && this.frame.name == this.PRESSED_FRAME.toString()) {
                 callback();
@@ -73,9 +90,9 @@ export class Button extends Phaser.GameObjects.Sprite {
         super.update();
     }
 
-    public click() {
-        this.onDown();
-        setTimeout(this.onUp(this.callback).bind(this), 100);
+    public evilCursorClick() {
+        this.evilCursorOnDown();
+        setTimeout(this.evilCursorOnUp(this.callback).bind(this), 100);
     }
     
 }

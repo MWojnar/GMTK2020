@@ -26,7 +26,7 @@ export class DoctorNumbers extends Phaser.GameObjects.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | integer) {
         super(scene, x, y, texture, frame);
         this.scene.add.existing(this);
-        this.text = this.scene.add.text(720 + 10, 0, "Hello! I’m Professor Numbers! I’m here to teach you all about the wonderful world of counting! Click on the 0 in the center to count to the next number!", { color: "#000000", fontSize: 32, wordWrap: { width: 340 } });
+        this.text = this.scene.add.text(720 + 10, 0, "Hello! I’m Professor Numbers! I’m here to teach you all about the wonderful world of counting! Click on the 0 in the center to count to the next number!", { color: "#000000", fontSize: 24, wordWrap: { width: 340 } });
         this.dialogue = this.scene.cache.json.get('dialogue');
         this.dialogue.forEach(element => this.eventNumbers.push(element.numberTrigger));
         this.eventEmitter = CustomEventEmitter.getInstance();
@@ -44,7 +44,7 @@ export class DoctorNumbers extends Phaser.GameObjects.Sprite {
         if (event) {
             if (this.text)
                 this.text.destroy();
-            this.text = this.scene.add.text(720 + 10, 0, event.text, { color: "#000000", fontSize: 32, wordWrap: { width: 340 } });
+            this.text = this.scene.add.text(720 + 10, 0, event.text, { color: "#000000", fontSize: 24, wordWrap: { width: 340 } });
             event.event.split('|').forEach(e => this.enactEvent(e));
             switch (event.frame) {
                 case "happy": this.setFrame(this.HAPPY_FRAME); break;

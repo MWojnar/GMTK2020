@@ -36,11 +36,6 @@ export class GameManager {
         sceneInstanceMap[scene.scene.key] = this;
         this.scene = scene;
         this.scene.add.existing(new Phaser.GameObjects.Image(scene, scene.cameras.main.centerX, scene.cameras.main.centerY, 'background'));
-        this.number = new Number(scene, 720 / 2, scene.cameras.main.centerY);
-        this.doctorNumbers = new DoctorNumbers(scene, 910, 360, 'doctorNumbers');
-        this.clickerButton = new Button(scene, 960, 550, 'button', this.buyClicker.bind(this), this.canBuyClicker.bind(this), 'Buy (-15)', '+1 Per Click', 0);
-        this.autoButton = new Button(scene, 960, 650, 'button', this.buyAuto.bind(this), this.canBuyAuto.bind(this), 'Buy (-150)', '+0 Per Second', 0);
-        this.scene.events.on("update", this.update, this);
         let shopSettings = this.scene.cache.json.get('shopSettings');
         this.curClickerPrice = shopSettings.initClickerPrice;
         this.curAutoPrice = shopSettings.initAutoPrice;
@@ -48,6 +43,11 @@ export class GameManager {
         this.curAutoAmount = shopSettings.initAutoAmount;
         this.clickerExponent = shopSettings.clickerExponent;
         this.autoExponent = shopSettings.autoExponent;
+        this.number = new Number(scene, 720 / 2, scene.cameras.main.centerY);
+        this.doctorNumbers = new DoctorNumbers(scene, 910, 360, 'doctorNumbers');
+        this.clickerButton = new Button(scene, 960, 550, 'button', this.buyClicker.bind(this), this.canBuyClicker.bind(this), 'Buy (-' + this.curClickerPrice + ')', '+' + this.curClickAmount + ' Per Click', 0);
+        this.autoButton = new Button(scene, 960, 650, 'button', this.buyAuto.bind(this), this.canBuyAuto.bind(this), 'Buy (-' + this.curAutoPrice + ')', '+' + this.curAutoAmount + ' Per Second', 0);
+        this.scene.events.on("update", this.update, this);
     }
 
     public static getInstance(scene: Scene): GameManager {

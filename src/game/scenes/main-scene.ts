@@ -35,7 +35,7 @@ export class MainScene extends Phaser.Scene {
       frameHeight: 128, frameWidth: 128
     });
     this.load.spritesheet('doctorNumbers', '../assets/ProfessorNumbers.png', {
-      frameHeight: 208, frameWidth: 218
+      frameHeight: 208, frameWidth: 216
     });
 
     this.load.animation('animations', '../assets/animations.json');

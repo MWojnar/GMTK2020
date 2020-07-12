@@ -74,7 +74,7 @@
         {
             "numberTrigger": 25000,
             "text": "Alright slowpoke, I’ll take over the clicking! You just handle the store. I can click WAY faster than your limp fingers anyway.",
-            "event": "evilClicker",
+            "event": "incrementEvilClicker",
             "frame": 0
         },
         {
@@ -86,7 +86,7 @@
         {
             "numberTrigger": 100000,
             "text": "Oh no! The Number Police are here! Quick! Click them before they start taking down my GLORIOUS number!",
-            "event": "numberPolice",
+            "event": "incrementNumberPolice",
             "frame": 0
         },
         {
@@ -98,31 +98,43 @@
         {
             "numberTrigger": 250000,
             "text": "I don’t care if this high of a number is illegal! We’re going to reach number heights like NEVER before!!",
-            "event": "evilClicker2",
+            "event": "incrementEvilClicker",
             "frame": 0
         },
         {
             "numberTrigger": 500000,
             "text": "C’mon, C’MON! We need to go faster if we’re going to keep up with these Number Cops!",
-            "event": "numberPolice2",
+            "event": "incrementNumberPolice",
             "frame": 0
         },
         {
             "numberTrigger": 1000000,
             "text": "FINE! If you want something done right, you gotta do it yourself! I’ll take over the store, you handle the cops!",
-            "event": "evilBuyer",
+            "event": "incrementEvilBuyer",
             "frame": 0
         },
         {
             "numberTrigger": 2500000,
             "text": "You’ll  NEVER TAKE ME ALIVE, COPPERS!!",
-            "event": "evilFighter",
+            "event": "incrementEvilClicker|incrementEvilFighter",
             "frame": 0
         },
         {
             "numberTrigger": 5000000,
-            "text": "",
-            "event": "none",
+            "text": "TAKE THAT! AND THAT! YOU’LL NEVER TAKE ME!!!",
+            "event": "incrementEvilFighter",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 10000000,
+            "text": "MWAHAHAHAHAHA!!!! MAXIMUM COUNTING!!!",
+            "event": "incrementEvilClicker|incrementEvilBuyer|incrementEvilFighter|incrementNumberPolice",
+            "frame": 0
+        },
+        {
+            "numberTrigger": 50000000,
+            "text": "TO THE FORBIDDEN INFINITY!!!",
+            "event": "end",
             "frame": 0
         }
     ]

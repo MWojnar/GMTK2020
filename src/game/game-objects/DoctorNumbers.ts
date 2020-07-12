@@ -8,6 +8,7 @@ export class DoctorNumbers extends Phaser.GameObjects.Sprite {
     private eventNumbers = [];
     private dialogue;
     private eventEmitter: CustomEventEmitter;
+    private gameManager: GameManager;
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string | integer) {
         super(scene, x, y, texture, frame);
@@ -16,7 +17,8 @@ export class DoctorNumbers extends Phaser.GameObjects.Sprite {
         this.dialogue = this.scene.cache.json.get('dialogue');
         this.dialogue.forEach(element => this.eventNumbers.push(element.numberTrigger));
         this.eventEmitter = CustomEventEmitter.getInstance();
-        this.eventEmitter.on(EVENTS.NUMBER_CHANGED, this.onNumberIncrease.bind(this));
+        this.eventEmitter.on(EVENTS.NUMBER_CHANGED, this.onNumberIncrease, this);
+        this.gameManager = GameManager.getInstance(scene);
     }
 
     private onNumberIncrease(prev, cur): void {
@@ -30,9 +32,24 @@ export class DoctorNumbers extends Phaser.GameObjects.Sprite {
             if (this.text)
                 this.text.destroy();
             this.text = this.scene.add.text(720 + 10, 0, event.text, { color: "#000000", fontSize: 32, wordWrap: { width: 340 } });
-            if (event.numberTrigger === 10)
-                GameManager.getInstance(this.scene).createNumberEvilCursor(100, 100, 5);
+            event.event.split('|').forEach(e => this.enactEvent(e));
         }
+    }
+
+    private enactEvent(event) {
+        switch (event) {
+            case "unlockStore": this.gameManager.unlockStore(); break;
+            case "incrementEvilClicker": this.gameManager.incrementEvilClickerPhase(); break;
+            case "incrementNumberPolice": this.gameManager.incrementPolicePhase(); break;
+            case "incrementEvilBuyer": this.gameManager.incrementEvilBuyerPhase(); break;
+            case "incrementEvilFighter": this.gameManager.incrementEvilFighterPhase(); break;
+            case "end": this.gameManager.initiateEnd(); break;
+        }
+    }
+
+    public destroy() {
+        this.eventEmitter.off(EVENTS.NUMBER_CHANGED, this.onNumberIncrease, this);
+        super.destroy();
     }
     
 }

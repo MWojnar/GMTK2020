@@ -31,6 +31,12 @@ export class Number extends Phaser.GameObjects.Text {
         this.scene.add.existing(this);
     }
 
+    public click(amount: number): void {
+        if (GameManager.getInstance(this.scene).canClickNumber()) {
+            this.add(amount);
+        }
+    }
+
     public add(amount: number): void {
         this.value += amount;
         this.setText(Math.floor(this.value).toString());
@@ -38,7 +44,7 @@ export class Number extends Phaser.GameObjects.Text {
     }
 
     public addClick(): void {
-        this.add(GameManager.getInstance(this.scene).getClickAmount())
+        this.click(GameManager.getInstance(this.scene).getClickAmount())
     }
 
     public getValue(): number {

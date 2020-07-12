@@ -9,6 +9,7 @@ import { EvilCursor } from "../game-objects/EvilCursor";
 import { Button } from '../game-objects/Button';
 import { DoctorNumbers } from '../game-objects/DoctorNumbers';
 import { Animations } from "phaser";
+import { NumberPolice } from "../game-objects/NumberPolice";
 
 export class MainScene extends Phaser.Scene {
   private phaserSprite: Phaser.GameObjects.Sprite;
@@ -20,6 +21,8 @@ export class MainScene extends Phaser.Scene {
   }
 
   preload(): void {
+
+    this.load.plugin('rexmovetoplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexmovetoplugin.min.js', true);
     
     /* Can we load spritesheets from json like animations? */
     this.load.spritesheet('background', '../assets/Background.png', {

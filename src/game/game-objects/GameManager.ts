@@ -115,7 +115,8 @@ export class GameManager {
     }
 
     public initiateEnd(): void {
-        //todo
+        this.scene.cameras.main.shake(10000, 0.01);
+        this.scene.cameras.main.fadeOut(10000, 255, 255, 255);
     }
 
     private update(): void {

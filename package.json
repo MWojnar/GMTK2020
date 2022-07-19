@@ -31,7 +31,7 @@
     "fs": "0.0.1-security",
     "phaser": "^3.23.0",
     "phaser3-rex-plugins": "^1.1.19",
-    "properties-reader": "^2.0.0"
+    "properties-reader": "^2.2.0"
   },
   "scripts": {
     "dev": "cd src/game && yarn install && yarn run dev",
